@@ -8,7 +8,7 @@
 
 @EntityListeners(AuditingEntityListener.class)
 
-- Dodaj klasę z konfiguracją oraz adnotacją @EnableJpaAuditing - może być w klasie main()
+- (To nie jest potrzebne, dopiero trzeba dodać jak ma być informacja o tym kto dodał/modyfikował rekord)Dodaj klasę z konfiguracją oraz adnotacją @EnableJpaAuditing - może być w klasie main()
 - Dodaj repository do operacji CRUD.
 - Dodaj Rest, którym będziesz mógł przetestować działanie - może być w klasie main()
 - Uruchom aplikację
