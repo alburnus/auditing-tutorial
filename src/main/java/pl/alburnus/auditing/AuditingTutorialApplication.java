@@ -44,21 +44,21 @@ public class AuditingTutorialApplication {
         return "Delete";
     }
 
-    @Bean
-    public AuditorAware<String> createAuditorProvider() {
-        return new SecurityAuditor();
-    }
+//    @Bean
+//    public AuditorAware<String> createAuditorProvider() {
+//        return new SecurityAuditor();
+//    }
 
-    @Bean
-    public AuditingEntityListener createAuditingListener() {
-        return new AuditingEntityListener();
-    }
-
-    public static class SecurityAuditor implements AuditorAware<String> {
-        @Override
-        public String getCurrentAuditor() {
-            return "EPAMER";
-        }
-    }
+//    @Bean
+//    public AuditingEntityListener createAuditingListener() {
+//        return new AuditingEntityListener();
+//    }
+//
+//    public static class SecurityAuditor implements AuditorAware<String> {
+//        @Override
+//        public String getCurrentAuditor() {
+//            return "EPAMER";
+//        }
+//    }
 
 }

@@ -1,7 +1,6 @@
 package pl.alburnus.auditing;
 
 import lombok.Data;
-import lombok.Value;
 import org.hibernate.envers.Audited;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
