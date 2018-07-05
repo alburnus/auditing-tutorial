@@ -38,3 +38,9 @@ select rev, revtstmp,
   ) as rev_month 
 from revinfo r;
 
+## Links
+- https://programmingmitra.blogspot.com/2017/02/automatic-spring-data-jpa-auditing-saving-CreatedBy-createddate-lastmodifiedby-lastmodifieddate-automatically.html 
+- https://dzone.com/articles/spring-data-jpa-auditing-automatically-the-good-stuff
+- https://blog.countableset.com/2014/03/08/auditing-spring-data-jpa-java-config/
+- https://docs.spring.io/spring-data/jpa/docs/1.7.0.DATAJPA-580-SNAPSHOT/reference/html/auditing.html
+- https://docs.spring.io/spring-data/jpa/docs/current/api/org/springframework/data/jpa/repository/config/EnableJpaAuditing.html
