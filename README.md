@@ -21,6 +21,27 @@ Natomiast w revinfo znajdzie się timestamp operacji.
 
 ## Rozszerzenie modelu o osobę tworzącą/modyfikującą rekord
 
+## Postgresql w docker
+
+Uruchom kontener: 
+$ docker run --name audit -e POSTGRES_PASSWORD=haslo -d postgres
+
+Wejdź do kontenera w trybie bash: 
+$ docker exec -it id_kontenera bash
+
+Przełącz się użytkownika postgre: 
+$ psql -U postgres
+
+Utwórz użytkownika:
+$ createuser audit WITH PASSWORD 'audit'
+
+Utwórz bazę danych - dodać uprawnienie dla usera
+$ create database audit
+
+Sprawdzenie IP dockera
+$ docker inspect 8dab3dd10b7b | grep "IPAddress"
+
+## SQL
 
 select * from revinfo;
 select * from team;
