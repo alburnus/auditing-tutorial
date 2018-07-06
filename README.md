@@ -8,7 +8,7 @@
 
 @EntityListeners(AuditingEntityListener.class)
 
-- (To nie jest potrzebne, dopiero trzeba dodać jak ma być informacja o tym kto dodał/modyfikował rekord)Dodaj klasę z konfiguracją oraz adnotacją @EnableJpaAuditing - może być w klasie main()
+- Dodaj klasę z konfiguracją @Configuration oraz adnotacją @EnableJpaAuditing - może być w klasie main(). Stworzyć Bean AuditingEntityListener. 
 - Dodaj repository do operacji CRUD.
 - Dodaj Rest, którym będziesz mógł przetestować działanie - może być w klasie main()
 - Uruchom aplikację
@@ -19,12 +19,52 @@ W team_aud doda automatycznie kolummny: rev (relacja do revinfo) oraz revtype (0
 Natomiast w revinfo znajdzie się timestamp operacji. 
 
 
-## Rozszerzenie modelu o osobę tworzącą/modyfikującą rekord
+## Rozszerzenie modelu o osobę tworzącą/modyfikującą rekord w revinfo
+- Stworzyć klasę Entity dla revinfo w której będzie atrybut createdBy.
+- Ustawić na klasie adnotację RevisionEntity i wskazać na klasę, która będzie tworzyła obiekt rewizji.
+
+```
+@Entity
+@RevisionEntity(AuditingRevisionListener.class)
+@Table(name = "revinfo")
+@Data
+public class CustomRevision implements Serializable {
+
+    @Id
+    @RevisionNumber
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    @Column(name = "rev")
+    private int revisionNumber;
+
+    @RevisionTimestamp
+    @Column(name = "revtstmp")
+    private long revisionTimestamp;
+
+    @Column(name = "createdBy")
+    private String createdBy;
+}
+```
+
+
+- Stworzyć klasę AuditingRevisionListener, która będzie tworzyła obiekt z ustawieniem nazy użytkownika. 
+
+```
+public class AuditingRevisionListener implements RevisionListener  {
+
+    @Override
+    public void newRevision(Object o) {
+        CustomRevision customRevision = (CustomRevision) o;
+        customRevision.setCreatedBy("Crp member");
+    }
+}
+```
+
 
 ## Postgresql w docker
 
 Uruchom kontener: 
-$ docker run --name audit -e POSTGRES_PASSWORD=haslo -d postgres
+```$ docker run --name audit -e POSTGRES_PASSWORD=haslo -d postgres```
 
 Wejdź do kontenera w trybie bash: 
 $ docker exec -it id_kontenera bash
@@ -42,7 +82,7 @@ Sprawdzenie IP dockera
 $ docker inspect 8dab3dd10b7b | grep "IPAddress"
 
 ## SQL
-
+```
 select * from revinfo;
 select * from team;
 select * from team_aud;
@@ -58,7 +98,7 @@ select rev, revtstmp,
     + (r.revtstmp /1000/60/60/24 ||' day')::interval, 'YYYY/MM'
   ) as rev_month 
 from revinfo r;
-
+```
 ## Links
 - https://programmingmitra.blogspot.com/2017/02/automatic-spring-data-jpa-auditing-saving-CreatedBy-createddate-lastmodifiedby-lastmodifieddate-automatically.html 
 - https://dzone.com/articles/spring-data-jpa-auditing-automatically-the-good-stuff
