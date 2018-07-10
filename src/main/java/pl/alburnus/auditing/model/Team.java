@@ -1,4 +1,4 @@
-package pl.alburnus.auditing;
+package pl.alburnus.auditing.model;
 
 import lombok.Data;
 import org.hibernate.envers.Audited;

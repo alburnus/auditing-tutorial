@@ -3,17 +3,16 @@ package pl.alburnus.auditing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.AuditorAware;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import pl.alburnus.auditing.model.Team;
+import pl.alburnus.auditing.repository.TeamRepository;
 
 @SpringBootApplication
 @RestController
-// @EnableJpaAuditing
+@EnableJpaAuditing
 public class AuditingTutorialApplication {
 
     @Autowired
@@ -26,7 +25,7 @@ public class AuditingTutorialApplication {
     @GetMapping("/{name}")
     public String save(@PathVariable("name") String name) {
         teamRepository.save(new Team(name));
-        return "Save?";
+        return "Save";
     }
 
     @GetMapping("/{name}/update/{newName}")
@@ -44,6 +43,7 @@ public class AuditingTutorialApplication {
         return "Delete";
     }
 
+    // Documentation: https://docs.spring.io/spring-data/jpa/docs/1.7.0.DATAJPA-580-SNAPSHOT/reference/html/auditing.html
 //    @Bean
 //    public AuditorAware<String> createAuditorProvider() {
 //        return new SecurityAuditor();
@@ -57,7 +57,7 @@ public class AuditingTutorialApplication {
 //    public static class SecurityAuditor implements AuditorAware<String> {
 //        @Override
 //        public String getCurrentAuditor() {
-//            return "EPAMER";
+//            return "";
 //        }
 //    }
 
